@@ -1,0 +1,8 @@
+{
+  "name" : "Acme Tutor",
+  "version" : "1.0",
+  "description" : "My first chrome extension",
+  "browser action" : {
+    "default_icon" : "icon.png
+  }
+}
