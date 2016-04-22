@@ -4,166 +4,146 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
-    <link rel="stylesheet" href="css/foundation.css">
-    <link rel="stylesheet" href="css/app.css">
+      <title>AcmeTutor Pomodoro</title>
+      <link rel="stylesheet" href="../trial/css/foundation.css">
+      <link rel="stylesheet" href="../trial/css/app.css">
+      <link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
   </head>
   <body>
-    <div class="row">
-      <div class="large-12 columns">
-        <h1>Welcome to Foundation</h1>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="large-12 columns">
-        <div class="callout">
-          <h3>We&rsquo;re stoked you want to try Foundation! </h3>
-          <p>To get going, this file (index.html) includes some basic styles you can modify, play around with, or totally destroy to get going.</p>
-          <p>Once you've exhausted the fun in this document, you should check out:</p>
-          <div class="row">
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://foundation.zurb.com/docs">Foundation Documentation</a><br />Everything you need to know about using the framework.</p>
-            </div>
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://zurb.com/university/code-skills">Foundation Code Skills</a><br />These online courses offer you a chance to better understand how Foundation works and how you can master it to create awesome projects.</p>
-            </div>
-            <div class="large-4 medium-4 columns">
-              <p><a href="http://foundation.zurb.com/forum">Foundation Forum</a><br />Join the Foundation community to ask a question or show off your knowlege.</p>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-4 medium-4 medium-push-2 columns">
-              <p><a href="http://github.com/zurb/foundation">Foundation on Github</a><br />Latest code, issue reports, feature requests and more.</p>
-            </div>
-            <div class="large-4 medium-4 medium-pull-2 columns">
-              <p><a href="https://twitter.com/ZURBfoundation">@zurbfoundation</a><br />Ping us on Twitter if you have questions. When you build something with this we'd love to see it (and send you a totally boss sticker).</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div class="large-8 medium-8 columns">
-        <h5>Here&rsquo;s your basic grid:</h5>
-        <!-- Grid Example -->
-
+<body>
+    <div class="container-fluid">
         <div class="row">
-          <div class="large-12 columns">
-            <div class="primary callout">
-              <p><strong>This is a twelve column section in a row.</strong> Each of these includes a div.callout element so you can see where the columns are - it's not required at all for the grid.</p>
+            <div class="col-xs-12 text-center">
+                <h2 class="text-center" id="instructions">click clock to <span class="green">start</span></h2>
+                
+                <!--the whole clock and hands and arcs are all contained in the same svg viewbox-->
+                
+                <svg id="clock" viewBox="0 0 100 100">
+<!--drop shadow from http://demosthenes.info/ . Have to do the shadow using svg, or it wouldn't be able to follow the triangle hands-->
+                    <filter id="drop-shadow">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="1.5" />
+                        
+                        <feOffset dx="2" dy="2" result="offsetblur" />
+                        
+                        <feFlood flood-color="rgba(0,0,0,0.5)" />
+                        
+                        <feComposite in2="offsetblur" operator="in" />
+                        
+                        <feMerge>
+                            
+                            <feMergeNode/>
+                            
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    
+                    </filter>
+<!--have to put the filter in a style attribute so the url works-->
+                    
+                    <circle id="face" style="filter:url(#drop-shadow);" cx="50" cy="50" r="40" />
+                    
+                    <g id="hands" style="filter:url(#drop-shadow);">
+                        
+                        <polygon id="hour" points="50,25 53,50 47,50" />
+                        
+                        <polygon id="min" points="50,10 53,50 47,50" />
+                    </g>
+                    
+                    <circle id="handCircle" cx="50" cy="50" r="3" />
+<!--these paths show the pomodoros and breaks around the circle and are assigned attributes in the javascript-->
+                    <path id="progressArc" />
+                    <path id="pomArc" />
+					<path id="breakArc" />
+                </svg>
             </div>
-          </div>
         </div>
-        <div class="row">
-          <div class="large-6 medium-6 columns">
-            <div class="primary callout">
-              <p>Six columns</p>
-            </div>
-          </div>
-          <div class="large-6 medium-6 columns">
-            <div class="primary callout">
-              <p>Six columns</p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="large-4 medium-4 small-4 columns">
-            <div class="primary callout">
-              <p>Four columns</p>
-            </div>
-          </div>
-          <div class="large-4 medium-4 small-4 columns">
-            <div class="primary callout">
-              <p>Four columns</p>
-            </div>
-          </div>
-          <div class="large-4 medium-4 small-4 columns">
-            <div class="primary callout">
-              <p>Four columns</p>
-            </div>
-          </div>
-        </div>
+			
+				<!--this is the modal, hidden by default, that pops up when the user clicks the clock. Not too complicated.-->
+				<div id="startModal" class="modal fade" role="dialog">
+                    
+                    
+                    <a href="#" data-reveal-id="myModal">Click Me For A Modal</a>
 
-        <hr />
+<div id="myModal" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+  <h2 id="modalTitle">Awesome. I have it.</h2>
+  <p class="lead">Your couch.  It is mine.</p>
+  <p>I'm a cool paragraph that lives inside of an even cooler modal. Wins!</p>$(document).ready(function(){
 
-        <h5>We bet you&rsquo;ll need a form somewhere:</h5>
-        <form>
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Input Label</label>
-              <input type="text" placeholder="large-12.columns" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-4 medium-4 columns">
-              <label>Input Label</label>
-              <input type="text" placeholder="large-4.columns" />
-            </div>
-            <div class="large-4 medium-4 columns">
-              <label>Input Label</label>
-              <input type="text" placeholder="large-4.columns" />
-            </div>
-            <div class="large-4 medium-4 columns">
-              <div class="row collapse">
-                <label>Input Label</label>
-                <div class="input-group">
-                  <input type="text" placeholder="small-9.columns" class="input-group-field" />
-                  <span class="input-group-label">.com</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Select Box</label>
-              <select>
-                <option value="husker">Husker</option>
-                <option value="starbuck">Starbuck</option>
-                <option value="hotdog">Hot Dog</option>
-                <option value="apollo">Apollo</option>
-              </select>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-6 medium-6 columns">
-              <label>Choose Your Favorite</label>
-              <input type="radio" name="pokemon" value="Red" id="pokemonRed"><label for="pokemonRed">Radio 1</label>
-              <input type="radio" name="pokemon" value="Blue" id="pokemonBlue"><label for="pokemonBlue">Radio 2</label>
-            </div>
-            <div class="large-6 medium-6 columns">
-              <label>Check these out</label>
-              <input id="checkbox1" type="checkbox"><label for="checkbox1">Checkbox 1</label>
-              <input id="checkbox2" type="checkbox"><label for="checkbox2">Checkbox 2</label>
-            </div>
-          </div>
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Textarea Label</label>
-              <textarea placeholder="small-12.columns"></textarea>
-            </div>
-          </div>
-        </form>
-      </div>
+</div>
+                    
+                    
+                    
+                    <div class="modal-dialog">
+<!-- Modal content-->
+                            
+                            
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3 class="modal-title" id="modalTitle">Choose your goal!</h3>
+                                </div>
+										<div class="modal-body">
 
-      <div class="large-4 medium-4 columns">
-        <h5>Try one of these buttons:</h5>
-        <p><a href="#" class="button">Simple Button</a><br/>
-        <a href="#" class="success button">Success Btn</a><br/>
-        <a href="#" class="alert button">Alert Btn</a><br/>
-        <a href="#" class="secondary button">Secondary Btn</a></p>
-        <div class="callout">
-          <h5>So many components, girl!</h5>
-          <p>A whole kitchen sink of goodies comes with Foundation. Check out the docs to see them all, along with details on making them your own.</p>
-          <a href="http://foundation.zurb.com/sites/docs/" class="small button">Go to Foundation Docs</a>
-        </div>
-      </div>
-    </div>
+												<form id="input" autocomplete="off">
+														<div class="form-group">
+																<div id="goalDiv">
+																		<label for="pomQuantity">How many
+																				<a href="#" data-toggle="tooltip" title='A "Pomodoro" is a work / break cycle. Default: 25 mins work and 5 mins break. After 4 pomodoros: 15 mins break.'> <b>pomodoros<i class="fa fa-question-circle"></i></b></a> will you do?</label>
+																		<input type="number" class="form-control quantity" id="pomQuantity" min="1" max="16" value=1>
+																		<input class="numSlider" type=range min=1 max=16 value=1 id="pomNumSlider" step=1>
+																		<p id="workTime"></p>
+																</div>
 
-    <script src="js/vendor/jquery.js"></script>
-    <script src="js/vendor/what-input.js"></script>
-    <script src="js/vendor/foundation.js"></script>
-    <script src="js/app.js"></script>
+																<div id="settings">
+
+																		<label for="workLength" style="float:left;"><i class="fa fa-briefcase"></i> Work</label>
+																		<input type="number" class="form-control quantity" id="workLength" min="1" max="59" value="25">
+																		<input class="numSlider" type="range" min="1" max="59" value="25" id="workSlider" step="1">
+
+																		<label for="playLength" style="float:left;"><i class="fa fa-coffee"></i> Relax</label>
+																		<input type="number" class="form-control quantity" id="playLength" min="1" max="59" value="5">
+																		<input class="numSlider" type="range" min="1" max="59" value="5" id="playSlider" step="1">
+																</div>
+														</div>
+												</form>
+										</div>
+										<div class="modal-footer">
+												<button type="button" id="settingsBtn" class="btn btn-info fa fa-gear hvr-bounce-in" style="float:left;"> Settings</button>
+												<button type="button" id="startPom" class="btn btn-success" data-dismiss="modal">Let's go!</button>
+										</div>
+								</div>	
+                    </div>
+				</div>
+			
+				<!--empty audio tag to make the sounds work on chrome for android-->
+				<audio id="chromeMobile" preload="auto">
+						<source src="" type="audio/mp3" />
+				</audio>
+
+
+				<audio id="bell" preload="auto">
+						<source src="http://www.myinstants.com/media/sounds/boxing-bell.mp3" type="audio/mp3" />
+				</audio>
+
+				<audio id="failure" preload="auto">
+						<source src="http://www.myinstants.com/media/sounds/you-have-failed.mp3" type="audio/mp3" />
+				</audio>
+
+				<!-- <audio id="failure" preload="auto">
+          <source src="http://www.myinstants.com/media/sounds/sadtrombone.swf.mp3" type="audio/mp3" />
+        </audio> -->
+
+				<audio id="success" preload="auto">
+						<source src="http://www.myinstants.com/media/sounds/039-a-victory-fanfare.mp3" type="audio/mp3" />
+				</audio>
+			
+		</div>
+</body>
+
+    <script src="../trial/js/vendor/jquery.js"></script>
+    <script src="../trial/js/vendor/what-input.js"></script>
+    <script src="../trial/js/vendor/foundation.js"></script>
+    <script src="../trial/js/app.js"></script>
   </body>
 </html>
