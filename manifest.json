@@ -1,34 +1,31 @@
+
 {
-  "name" : "Acme Tutor",
   "manifest_version": 2,
-  "version": "0.0.1",
-  "description" : "My first chrome extension",
-  "browser action" : {
-    "default_icon": "icon.png",
-    "default_title": "That's the tool tip",
-    "default_popup": "work.html"
+
+  "name": "Acme Tutor",
+  "version": "1.0",
+  "description": "Let us help  you focus on your study",
+
+  "browser_action": {
+      "default_icon": "Assets/icons/icon19x19.png",
+      "default_title": "Acmetutor POMODORO",
+      "default_popup": "work.html"
+      
   },
 
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+    
+    
   "icons" : {
-    "19" : "icon.png",
-    "38" : "icon.png",
-    "128" : "icon.png"
+    "16" : "Assets/icons/icon16x16.png",
+    "19" : "Assets/icons/icon19x19.png",
+    "38" : "Assets/icons/icon38x38.png",
+    "48" : "Assets/icons/icon48x48.png",
+    "128" : "Assets/icons/icon128x128.png"
   },
-
-   "background": {
-     "scripts": ["background.js"]
-//      "persistent": false/true
-   },
-
-
-  "content_scripts": [
-    {
-      "matches": ["http://*/*" , "https://*/*"],
-
-      "js": ["content.js"]
-    }
-  ]
+  
+  "permissions": ["<all_urls>"]
 }
-
-
-
