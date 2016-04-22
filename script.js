@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-	var query = "SELECT * FROM feed WHERE url='http://feeds.feedburner.com/Tutorialzine' LIMIT 2";
+//	var query = "SELECT * FROM feed WHERE url='http://feeds.feedburner.com/Tutorialzine' LIMIT 2";
 
 	// Storing the seconds since the epoch in now:
 	var now = (new Date()).getTime()/1000;
