@@ -9,7 +9,7 @@
   "browser_action": {
       "default_icon": "Assets/icons/icon19x19.png",
       "default_title": "Acmetutor POMODORO",
-      "default_popup": "work.html"
+      "default_popup": "pomo.html"
       
   },
 
